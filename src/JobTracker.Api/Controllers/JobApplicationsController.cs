@@ -14,7 +14,8 @@ public class JobApplicationsController(JobTrackerDbContext dbContext) : Controll
     public async Task<ActionResult<IEnumerable<JobApplication>>> GetAll()
     {
         var applications = await dbContext.JobApplications
-            .OrderByDescending(application => application.CreatedAtUtc)
+            .OrderByDescending(application => application.DateApplied)
+            .ThenByDescending(application => application.CreatedAtUtc)
             .ToListAsync();
 
         return Ok(applications);
@@ -42,6 +43,7 @@ public class JobApplicationsController(JobTrackerDbContext dbContext) : Controll
             JobTitle = request.JobTitle.Trim(),
             CompanyName = request.CompanyName.Trim(),
             JobPostUrl = request.JobPostUrl.Trim(),
+            DateApplied = request.DateApplied,
             Status = request.Status,
             CreatedAtUtc = DateTime.UtcNow,
             UpdatedAtUtc = DateTime.UtcNow
@@ -71,6 +73,7 @@ public class JobApplicationsController(JobTrackerDbContext dbContext) : Controll
         application.JobTitle = request.JobTitle.Trim();
         application.CompanyName = request.CompanyName.Trim();
         application.JobPostUrl = request.JobPostUrl.Trim();
+        application.DateApplied = request.DateApplied;
         application.Status = request.Status;
         application.UpdatedAtUtc = DateTime.UtcNow;
 

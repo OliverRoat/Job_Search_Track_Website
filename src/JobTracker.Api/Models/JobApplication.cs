@@ -10,6 +10,8 @@ public class JobApplication
 
     public required string JobPostUrl { get; set; }
 
+    public DateOnly DateApplied { get; set; } = DateOnly.FromDateTime(DateTime.UtcNow);
+
     public ApplicationStatus Status { get; set; } = ApplicationStatus.Applied;
 
     public DateTime CreatedAtUtc { get; set; } = DateTime.UtcNow;

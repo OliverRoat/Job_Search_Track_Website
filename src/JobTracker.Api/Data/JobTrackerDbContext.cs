@@ -20,6 +20,8 @@ public class JobTrackerDbContext(DbContextOptions<JobTrackerDbContext> options) 
             entity.Property(application => application.JobPostUrl)
                 .HasMaxLength(2048);
 
+            entity.Property(application => application.DateApplied);
+
             entity.Property(application => application.Status)
                 .HasConversion<string>();
         });

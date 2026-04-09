@@ -31,7 +31,7 @@ var hasBuiltClient = File.Exists(builtClientIndexPath);
 using (var scope = app.Services.CreateScope())
 {
     var dbContext = scope.ServiceProvider.GetRequiredService<JobTrackerDbContext>();
-    dbContext.Database.EnsureCreated();
+    JobTrackerDbInitializer.Initialize(dbContext);
 }
 
 if (app.Environment.IsDevelopment())

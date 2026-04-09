@@ -14,6 +14,7 @@ const emptyForm = {
   jobTitle: '',
   companyName: '',
   jobPostUrl: '',
+  dateApplied: getTodayDateInputValue(),
   status: 'Applied',
 };
 
@@ -78,6 +79,7 @@ function App() {
       jobTitle: application.jobTitle,
       companyName: application.companyName,
       jobPostUrl: application.jobPostUrl,
+      dateApplied: application.dateApplied ?? getTodayDateInputValue(),
       status: application.status,
     });
     setSuccessMessage(`Editing ${application.jobTitle} at ${application.companyName}.`);
@@ -98,10 +100,11 @@ function App() {
       jobTitle: form.jobTitle.trim(),
       companyName: form.companyName.trim(),
       jobPostUrl: form.jobPostUrl.trim(),
+      dateApplied: form.dateApplied,
       status: form.status,
     };
 
-    if (!trimmedForm.jobTitle || !trimmedForm.companyName || !trimmedForm.jobPostUrl) {
+    if (!trimmedForm.jobTitle || !trimmedForm.companyName || !trimmedForm.jobPostUrl || !trimmedForm.dateApplied) {
       setErrorMessage('Please fill in every field before saving.');
       return;
     }
@@ -255,6 +258,16 @@ function App() {
             </label>
 
             <label>
+              <span>Date applied</span>
+              <input
+                name="dateApplied"
+                type="date"
+                value={form.dateApplied}
+                onChange={handleInputChange}
+              />
+            </label>
+
+            <label>
               <span>Status</span>
               <select name="status" value={form.status} onChange={handleInputChange}>
                 {statusOptions.map((option) => (
@@ -330,6 +343,10 @@ function App() {
 
                   <dl className="meta-list">
                     <div>
+                      <dt>Date applied</dt>
+                      <dd>{formatDateOnly(application.dateApplied)}</dd>
+                    </div>
+                    <div>
                       <dt>Created</dt>
                       <dd>{formatDate(application.createdAtUtc)}</dd>
                     </div>
@@ -398,6 +415,27 @@ function formatDate(value) {
     month: 'short',
     day: 'numeric',
   }).format(new Date(value));
+}
+
+function formatDateOnly(value) {
+  if (!value) {
+    return 'Not set';
+  }
+
+  const [year, month, day] = value.split('-').map(Number);
+  return new Intl.DateTimeFormat(undefined, {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+  }).format(new Date(year, month - 1, day));
+}
+
+function getTodayDateInputValue() {
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, '0');
+  const day = String(today.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
 }
 
 export default App;

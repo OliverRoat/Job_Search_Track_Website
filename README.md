@@ -31,7 +31,7 @@ If you want even quicker access, create a desktop shortcut to `open-job-tracker.
 
 ## What it does
 
-- Create job applications with a job title, company name, job post link, and status.
+- Create job applications with a job title, company name, job post link, date applied, and status.
 - Track each application through these statuses:
   - `Applied`
   - `Denied`

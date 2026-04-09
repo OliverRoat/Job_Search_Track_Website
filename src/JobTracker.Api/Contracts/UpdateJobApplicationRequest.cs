@@ -17,6 +17,9 @@ public class UpdateJobApplicationRequest
     [StringLength(2048)]
     public string JobPostUrl { get; set; } = string.Empty;
 
+    [Required]
+    public DateOnly DateApplied { get; set; }
+
     [EnumDataType(typeof(ApplicationStatus))]
     public ApplicationStatus Status { get; set; }
 }

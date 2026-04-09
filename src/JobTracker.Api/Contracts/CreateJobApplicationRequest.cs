@@ -17,6 +17,9 @@ public class CreateJobApplicationRequest
     [StringLength(2048)]
     public string JobPostUrl { get; set; } = string.Empty;
 
+    [Required]
+    public DateOnly DateApplied { get; set; } = DateOnly.FromDateTime(DateTime.UtcNow);
+
     [EnumDataType(typeof(ApplicationStatus))]
     public ApplicationStatus Status { get; set; } = ApplicationStatus.Applied;
 }
